@@ -16,7 +16,7 @@ body {
     margin: 0;
     min-height: 100vh;
     background:
-        radial-gradient(circle at top, #24101b 0%, #090609 45%, #020202 100%);
+        radial-gradient(circle at top, #2b101d 0%, #090609 45%, #020202 100%);
     color: white;
     font-family: Arial, sans-serif;
     display: flex;
@@ -39,18 +39,18 @@ body {
     bottom: -40px;
     font-size: 18px;
     opacity: 0;
-    animation: floatUp linear infinite;
+    animation: floatUp linear forwards;
 }
 
 @keyframes floatUp {
 
     0% {
-        transform: translateY(0) scale(0.7) rotate(0deg);
+        transform: translateY(0) scale(.7) rotate(0deg);
         opacity: 0;
     }
 
     15% {
-        opacity: 0.8;
+        opacity: .8;
     }
 
     100% {
@@ -64,7 +64,7 @@ body {
 
 .container {
     width: 92%;
-    max-width: 650px;
+    max-width: 680px;
     text-align: center;
     position: relative;
     z-index: 2;
@@ -72,7 +72,7 @@ body {
 
 .screen {
     display: none;
-    animation: fadeIn 0.7s ease;
+    animation: fadeIn .6s ease;
 }
 
 .screen.active {
@@ -83,7 +83,7 @@ body {
 
     from {
         opacity: 0;
-        transform: translateY(15px);
+        transform: translateY(20px);
     }
 
     to {
@@ -93,17 +93,23 @@ body {
 
 }
 
+/* TEXT */
+
 h1 {
     font-size: 42px;
     letter-spacing: 5px;
-    margin-bottom: 10px;
+    margin: 10px 0;
+}
+
+h2 {
+    letter-spacing: 3px;
 }
 
 .subtitle {
-    color: #d89aaa;
+    color: #e29aad;
     letter-spacing: 4px;
     font-size: 13px;
-    margin-bottom: 35px;
+    margin-bottom: 30px;
 }
 
 p {
@@ -113,41 +119,51 @@ p {
 /* CARD */
 
 .card {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,130,160,0.3);
-    border-radius: 20px;
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(255,130,160,.35);
+    border-radius: 22px;
     padding: 35px 25px;
     box-shadow:
-        0 0 40px rgba(255,70,120,0.08),
-        inset 0 0 30px rgba(255,255,255,0.02);
-    backdrop-filter: blur(10px);
+        0 0 40px rgba(255,70,120,.10),
+        inset 0 0 30px rgba(255,255,255,.02);
+    backdrop-filter: blur(12px);
 }
 
 .question {
-    font-size: 25px;
-    margin: 25px 0 35px;
-    min-height: 70px;
+    font-size: 24px;
+    line-height: 1.5;
+    margin: 30px 0;
+    min-height: 80px;
+}
+
+.secret-code {
+    font-size: 11px;
+    color: #777;
+    letter-spacing: 3px;
 }
 
 /* BUTTONS */
 
 button {
     border: 1px solid #ff8fab;
-    background: rgba(255,80,120,0.08);
+    background: rgba(255,80,120,.08);
     color: white;
-    padding: 14px 30px;
+    padding: 14px 32px;
     margin: 8px;
     border-radius: 30px;
     font-size: 16px;
     cursor: pointer;
-    transition: 0.25s;
+    transition: .25s;
 }
 
 button:hover {
     background: #ff6f91;
-    color: white;
     transform: scale(1.07);
-    box-shadow: 0 0 25px rgba(255,90,130,0.5);
+    box-shadow: 0 0 25px rgba(255,90,130,.5);
+}
+
+button:active {
+    transform: scale(.95);
 }
 
 /* PROGRESS */
@@ -155,13 +171,13 @@ button:hover {
 .progress-text {
     color: #aaa;
     font-size: 13px;
-    margin-top: 25px;
+    margin-top: 22px;
 }
 
 .progress {
     width: 100%;
     height: 7px;
-    background: rgba(255,255,255,0.08);
+    background: rgba(255,255,255,.08);
     border-radius: 10px;
     margin-top: 10px;
     overflow: hidden;
@@ -171,13 +187,13 @@ button:hover {
     height: 100%;
     width: 0%;
     background: linear-gradient(90deg,#ff5f87,#ffb0c0);
-    transition: width 0.5s ease;
+    transition: width .5s ease;
 }
 
 /* BIG HEART */
 
 .big-heart {
-    font-size: 70px;
+    font-size: 75px;
     animation: heartbeat 1.2s infinite;
 }
 
@@ -193,31 +209,39 @@ button:hover {
 
 }
 
+/* ERROR */
+
+.error-title {
+    color: #ff718f;
+    font-size: 30px;
+    letter-spacing: 3px;
+}
+
+.system-text {
+    color: #bbb;
+    font-family: monospace;
+    font-size: 15px;
+    line-height: 2;
+    min-height: 150px;
+}
+
 /* FINAL */
 
 .final-title {
-    font-size: 42px;
+    font-size: 45px;
     color: #ff91aa;
-    text-shadow: 0 0 25px rgba(255,90,130,0.6);
+    text-shadow: 0 0 25px rgba(255,90,130,.6);
 }
 
 .final-text {
-    font-size: 20px;
+    font-size: 19px;
     color: #eee;
 }
 
 .small {
     color: #777;
     margin-top: 30px;
-}
-
-/* SECRET */
-
-.secret-code {
     font-size: 12px;
-    color: #777;
-    letter-spacing: 3px;
-    margin-bottom: 20px;
 }
 
 </style>
@@ -228,6 +252,7 @@ button:hover {
 <div class="hearts" id="hearts"></div>
 
 <div class="container">
+
 
 <!-- START -->
 
@@ -245,11 +270,19 @@ button:hover {
 
         <p>SUBJECT: <b>TAKO</b></p>
 
-        <p>MISSION STATUS: <span style="color:#ff91aa">READY</span></p>
+        <p>
+            MISSION STATUS:
+            <span style="color:#ff91aa">READY</span>
+        </p>
 
         <p>
-            A very important mission has been prepared
-            especially for you.
+            A highly classified mission has been
+            prepared especially for you.
+        </p>
+
+        <p>
+            Please answer every question honestly...
+            😏
         </p>
 
         <button onclick="startMission()">
@@ -261,7 +294,7 @@ button:hover {
 </div>
 
 
-<!-- QUESTIONS -->
+<!-- GAME -->
 
 <div id="game" class="screen">
 
@@ -296,7 +329,24 @@ button:hover {
 </div>
 
 
-<!-- MID MESSAGE -->
+<!-- NO ERROR -->
+
+<div id="error" class="screen">
+
+    <div class="card">
+
+        <div class="error-title">
+            ⚠ SYSTEM ALERT ⚠
+        </div>
+
+        <div class="system-text" id="systemText"></div>
+
+    </div>
+
+</div>
+
+
+<!-- MID -->
 
 <div id="mid" class="screen">
 
@@ -304,22 +354,23 @@ button:hover {
 
     <div class="card">
 
-        <h2>ALMOST THERE...</h2>
+        <h2>MISSION ALMOST COMPLETE</h2>
 
         <p>
-            The system has analyzed your answers.
+            All answers have been successfully analyzed.
         </p>
 
         <p>
-            Something very interesting has been detected...
+            The system has detected an
+            unusually high level of...
         </p>
 
-        <p style="color:#ff9bb0">
-            ❤️ HIGH LEVEL OF LOVE DETECTED ❤️
+        <p style="color:#ff9bb0; font-size:20px;">
+            ❤️ LOVE ❤️
         </p>
 
         <button onclick="continueMission()">
-            CONTINUE
+            CONTINUE 👀
         </button>
 
     </div>
@@ -344,17 +395,21 @@ button:hover {
         <p class="final-text">
 
             This mission was never really
-            about answering questions.
+            about the questions.
 
             <br><br>
 
-            It was about reminding you
-            how special you are.
+            It was created because there is
+            someone very special on the other
+            side of this screen.
 
             <br><br>
 
-            And now there is only
-            <b>one final message.</b>
+            And now...
+
+            <br>
+
+            you are ready to find out why. ❤️
 
         </p>
 
@@ -391,8 +446,13 @@ button:hover {
             <br><br>
 
             Thank you for every smile,
-            every memory,
-            every little moment.
+            every memory and every
+            little moment.
+
+            <br><br>
+
+            Some people simply become
+            special without even trying.
 
             <br><br>
 
@@ -400,25 +460,33 @@ button:hover {
 
             <br><br>
 
-            And this is only
-            the beginning...
+            And this...
+
+            <br>
+
+            is only the beginning. ❤️
 
         </p>
 
         <div class="small">
-            SYSTEM STATUS: ❤️ LOVE CONFIRMED ❤️
+            SYSTEM STATUS:
+            ❤️ LOVE CONFIRMED ❤️
         </div>
 
     </div>
 
 </div>
 
+
 </div>
 
 
 <script>
 
-/* QUESTIONS */
+
+/* =========================
+   QUESTIONS
+========================= */
 
 const questions = [
 
@@ -470,14 +538,17 @@ const questions = [
 
 "Is there a little place in your heart for me? ❤️",
 
-"And finally... are you ready for the secret?"
+"And finally... are you ready for the secret? 👀❤️"
 
 ];
+
 
 let current = 0;
 
 
-/* SHOW SCREEN */
+/* =========================
+   SHOW SCREEN
+========================= */
 
 function show(id) {
 
@@ -492,7 +563,9 @@ function show(id) {
 }
 
 
-/* START */
+/* =========================
+   START
+========================= */
 
 function startMission() {
 
@@ -505,7 +578,9 @@ function startMission() {
 }
 
 
-/* LOAD QUESTION */
+/* =========================
+   LOAD QUESTION
+========================= */
 
 function loadQuestion() {
 
@@ -524,20 +599,15 @@ function loadQuestion() {
 }
 
 
-/* ANSWER */
+/* =========================
+   ANSWER
+========================= */
 
 function answer(yes) {
 
     if (!yes) {
 
-        document.getElementById("question").innerText =
-            "ACCESS DENIED 😏❤️";
-
-        setTimeout(() => {
-
-            loadQuestion();
-
-        }, 1000);
+        showError();
 
         return;
 
@@ -555,7 +625,7 @@ function answer(yes) {
 
             show("mid");
 
-        }, 700);
+        }, 600);
 
         return;
 
@@ -566,7 +636,75 @@ function answer(yes) {
 }
 
 
-/* MID */
+/* =========================
+   FUNNY NO SYSTEM
+========================= */
+
+function showError() {
+
+    show("error");
+
+    const text = document.getElementById("systemText");
+
+    const messages = [
+
+        "NO detected...",
+
+        "Analyzing answer...",
+
+        "Checking honesty...",
+
+        "Checking again...",
+
+        "ERROR 404: Honest answer not found 😂",
+
+        "Tako.exe is clearly pretending 😏❤️",
+
+        "SYSTEM HAS DETECTED SUS BEHAVIOR 😂",
+
+        "MISSION RESTARTING..."
+
+    ];
+
+    text.innerHTML = "";
+
+    let i = 0;
+
+    function nextMessage() {
+
+        if (i >= messages.length) {
+
+            setTimeout(() => {
+
+                current = 0;
+
+                show("game");
+
+                loadQuestion();
+
+            }, 700);
+
+            return;
+
+        }
+
+        text.innerHTML +=
+            messages[i] + "<br>";
+
+        i++;
+
+        setTimeout(nextMessage, 450);
+
+    }
+
+    nextMessage();
+
+}
+
+
+/* =========================
+   MID
+========================= */
 
 function continueMission() {
 
@@ -575,7 +713,9 @@ function continueMission() {
 }
 
 
-/* FINAL */
+/* =========================
+   FINAL
+========================= */
 
 function reveal() {
 
@@ -584,11 +724,14 @@ function reveal() {
     createBurst();
     createBurst();
     createBurst();
+    createBurst();
 
 }
 
 
-/* FLOATING HEARTS */
+/* =========================
+   FLOATING HEARTS
+========================= */
 
 function createHeart() {
 
@@ -596,10 +739,18 @@ function createHeart() {
 
     heart.className = "heart";
 
-    const symbols = ["❤️","💗","💕","💖","💘"];
+    const symbols = [
+        "❤️",
+        "💗",
+        "💕",
+        "💖",
+        "💘"
+    ];
 
     heart.innerText =
-        symbols[Math.floor(Math.random() * symbols.length)];
+        symbols[
+            Math.floor(Math.random() * symbols.length)
+        ];
 
     heart.style.left =
         Math.random() * 100 + "%";
@@ -610,10 +761,8 @@ function createHeart() {
     heart.style.animationDuration =
         (5 + Math.random() * 7) + "s";
 
-    heart.style.animationDelay =
-        Math.random() * 3 + "s";
-
-    document.getElementById("hearts").appendChild(heart);
+    document.getElementById("hearts")
+        .appendChild(heart);
 
     setTimeout(() => {
 
@@ -626,13 +775,16 @@ function createHeart() {
 setInterval(createHeart, 500);
 
 
-/* HEART BURST */
+/* =========================
+   HEART BURST
+========================= */
 
 function createBurst() {
 
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < 12; i++) {
 
-        const heart = document.createElement("div");
+        const heart =
+            document.createElement("div");
 
         heart.innerText = "❤️";
 
@@ -644,30 +796,39 @@ function createBurst() {
         heart.style.zIndex = "999";
 
         const x =
-            (Math.random() - 0.5) * 500;
+            (Math.random() - .5) * 600;
 
         const y =
-            (Math.random() - 0.5) * 500;
+            (Math.random() - .5) * 600;
 
-        heart.animate([
+        heart.animate(
+
+            [
+
+                {
+                    transform:
+                        "translate(-50%,-50%) scale(0)",
+                    opacity: 1
+                },
+
+                {
+                    transform:
+                        `translate(
+                            calc(-50% + ${x}px),
+                            calc(-50% + ${y}px)
+                        ) scale(1.5)`,
+
+                    opacity: 0
+                }
+
+            ],
 
             {
-                transform: "translate(-50%,-50%) scale(0)",
-                opacity: 1
-            },
-
-            {
-                transform:
-                    `translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) scale(1.5)`,
-                opacity: 0
+                duration: 1000,
+                easing: "ease-out"
             }
 
-        ], {
-
-            duration: 900,
-            easing: "ease-out"
-
-        });
+        );
 
         document.body.appendChild(heart);
 
@@ -675,7 +836,7 @@ function createBurst() {
 
             heart.remove();
 
-        }, 900);
+        }, 1000);
 
     }
 
