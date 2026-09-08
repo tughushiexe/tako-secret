@@ -3,9 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MISSION: TAKO</title>
+
+<title>MISSION: TAKO ❤️</title>
 
 <style>
+
 * {
     box-sizing: border-box;
 }
@@ -13,8 +15,9 @@
 body {
     margin: 0;
     min-height: 100vh;
-    background: #050505;
-    color: #fff;
+    background:
+        radial-gradient(circle at top, #24101b 0%, #090609 45%, #020202 100%);
+    color: white;
     font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
@@ -22,235 +25,660 @@ body {
     overflow: hidden;
 }
 
-.screen {
+/* FLOATING HEARTS */
+
+.hearts {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.heart {
+    position: absolute;
+    bottom: -40px;
+    font-size: 18px;
+    opacity: 0;
+    animation: floatUp linear infinite;
+}
+
+@keyframes floatUp {
+
+    0% {
+        transform: translateY(0) scale(0.7) rotate(0deg);
+        opacity: 0;
+    }
+
+    15% {
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: translateY(-110vh) scale(1.4) rotate(25deg);
+        opacity: 0;
+    }
+
+}
+
+/* MAIN */
+
+.container {
     width: 92%;
-    max-width: 600px;
+    max-width: 650px;
     text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+.screen {
     display: none;
+    animation: fadeIn 0.7s ease;
 }
 
 .screen.active {
     display: block;
 }
 
+@keyframes fadeIn {
+
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
 h1 {
     font-size: 42px;
     letter-spacing: 5px;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 .subtitle {
-    color: #aaa;
-    letter-spacing: 2px;
+    color: #d89aaa;
+    letter-spacing: 4px;
+    font-size: 13px;
     margin-bottom: 35px;
 }
 
-button {
-    background: transparent;
-    color: white;
-    border: 1px solid #fff;
-    padding: 14px 28px;
-    margin: 8px;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: 0.2s;
+p {
+    line-height: 1.7;
 }
 
-button:hover {
-    background: white;
-    color: black;
-    transform: scale(1.05);
+/* CARD */
+
+.card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,130,160,0.3);
+    border-radius: 20px;
+    padding: 35px 25px;
+    box-shadow:
+        0 0 40px rgba(255,70,120,0.08),
+        inset 0 0 30px rgba(255,255,255,0.02);
+    backdrop-filter: blur(10px);
 }
 
 .question {
     font-size: 25px;
-    margin: 30px 0;
+    margin: 25px 0 35px;
+    min-height: 70px;
+}
+
+/* BUTTONS */
+
+button {
+    border: 1px solid #ff8fab;
+    background: rgba(255,80,120,0.08);
+    color: white;
+    padding: 14px 30px;
+    margin: 8px;
+    border-radius: 30px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+button:hover {
+    background: #ff6f91;
+    color: white;
+    transform: scale(1.07);
+    box-shadow: 0 0 25px rgba(255,90,130,0.5);
+}
+
+/* PROGRESS */
+
+.progress-text {
+    color: #aaa;
+    font-size: 13px;
+    margin-top: 25px;
 }
 
 .progress {
     width: 100%;
-    height: 8px;
-    border: 1px solid #555;
-    margin-top: 30px;
+    height: 7px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 10px;
+    margin-top: 10px;
+    overflow: hidden;
 }
 
 .bar {
     height: 100%;
     width: 0%;
-    background: white;
-    transition: 0.5s;
+    background: linear-gradient(90deg,#ff5f87,#ffb0c0);
+    transition: width 0.5s ease;
 }
 
-.secret {
-    font-size: 18px;
-    line-height: 1.8;
-    color: #ddd;
+/* BIG HEART */
+
+.big-heart {
+    font-size: 70px;
+    animation: heartbeat 1.2s infinite;
 }
 
-.big {
-    font-size: 36px;
-    letter-spacing: 3px;
+@keyframes heartbeat {
+
+    0%,100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.18);
+    }
+
+}
+
+/* FINAL */
+
+.final-title {
+    font-size: 42px;
+    color: #ff91aa;
+    text-shadow: 0 0 25px rgba(255,90,130,0.6);
+}
+
+.final-text {
+    font-size: 20px;
+    color: #eee;
 }
 
 .small {
     color: #777;
-    margin-top: 25px;
+    margin-top: 30px;
 }
+
+/* SECRET */
+
+.secret-code {
+    font-size: 12px;
+    color: #777;
+    letter-spacing: 3px;
+    margin-bottom: 20px;
+}
+
 </style>
 </head>
 
 <body>
 
+<div class="hearts" id="hearts"></div>
+
+<div class="container">
+
 <!-- START -->
+
 <div id="start" class="screen active">
+
+    <div class="big-heart">❤️</div>
+
     <h1>TOP SECRET</h1>
-    <div class="subtitle">CLASSIFIED MISSION</div>
 
-    <p>SUBJECT: TAKO</p>
-    <p>MISSION STATUS: READY</p>
+    <div class="subtitle">
+        CLASSIFIED LOVE MISSION
+    </div>
 
-    <button onclick="startMission()">START MISSION</button>
+    <div class="card">
+
+        <p>SUBJECT: <b>TAKO</b></p>
+
+        <p>MISSION STATUS: <span style="color:#ff91aa">READY</span></p>
+
+        <p>
+            A very important mission has been prepared
+            especially for you.
+        </p>
+
+        <button onclick="startMission()">
+            START MISSION ❤️
+        </button>
+
+    </div>
+
 </div>
+
 
 <!-- QUESTIONS -->
+
 <div id="game" class="screen">
-    <div class="subtitle" id="counter"></div>
 
-    <div class="question" id="question"></div>
-
-    <button onclick="answer(true)">YES</button>
-    <button onclick="answer(false)">NO</button>
-
-    <div class="progress">
-        <div class="bar" id="bar"></div>
+    <div class="subtitle">
+        CLASSIFIED QUESTION
     </div>
+
+    <div class="card">
+
+        <div class="secret-code">
+            SYSTEM ACCESS // LOVE_PROTOCOL
+        </div>
+
+        <div class="question" id="question"></div>
+
+        <button onclick="answer(true)">
+            YES ❤️
+        </button>
+
+        <button onclick="answer(false)">
+            NO 😏
+        </button>
+
+        <div class="progress-text" id="counter"></div>
+
+        <div class="progress">
+            <div class="bar" id="bar"></div>
+        </div>
+
+    </div>
+
 </div>
 
-<!-- MEMORY -->
-<div id="memory" class="screen">
-    <h1>ACCESS GRANTED</h1>
 
-    <p class="secret">
-        You successfully completed the mission.
-        <br><br>
-        But the system detected something unusual...
-        <br><br>
-        Someone appears to be very important.
-    </p>
+<!-- MID MESSAGE -->
 
-    <button onclick="showSecret()">CONTINUE</button>
+<div id="mid" class="screen">
+
+    <div class="big-heart">💗</div>
+
+    <div class="card">
+
+        <h2>ALMOST THERE...</h2>
+
+        <p>
+            The system has analyzed your answers.
+        </p>
+
+        <p>
+            Something very interesting has been detected...
+        </p>
+
+        <p style="color:#ff9bb0">
+            ❤️ HIGH LEVEL OF LOVE DETECTED ❤️
+        </p>
+
+        <button onclick="continueMission()">
+            CONTINUE
+        </button>
+
+    </div>
+
 </div>
+
 
 <!-- SECRET -->
+
 <div id="secret" class="screen">
-    <div class="subtitle">FINAL SECRET UNLOCKED</div>
 
-    <p class="big">TAKO...</p>
+    <div class="subtitle">
+        FINAL ACCESS GRANTED
+    </div>
 
-    <p class="secret">
-        This mission was never really about testing you.
-        <br><br>
-        It was about finding the person
-        who makes everything a little better.
-        <br><br>
-        And the system has found that person.
-    </p>
+    <div class="card">
 
-    <button onclick="finalMessage()">REVEAL</button>
+        <div class="big-heart">💖</div>
+
+        <h1>FINAL SECRET</h1>
+
+        <p class="final-text">
+
+            This mission was never really
+            about answering questions.
+
+            <br><br>
+
+            It was about reminding you
+            how special you are.
+
+            <br><br>
+
+            And now there is only
+            <b>one final message.</b>
+
+        </p>
+
+        <button onclick="reveal()">
+            REVEAL ❤️
+        </button>
+
+    </div>
+
 </div>
+
 
 <!-- FINAL -->
+
 <div id="final" class="screen">
-    <div class="subtitle">FINAL MESSAGE</div>
 
-    <p class="big">ILIA LOVES YOU.</p>
+    <div class="card">
 
-    <p class="secret">
-        VERY, VERY MUCH.
-        <br><br>
-        MISSION COMPLETE.
-    </p>
+        <div class="big-heart">❤️</div>
 
-    <p class="small">Thank you for playing, Tako.</p>
+        <div class="subtitle">
+            MISSION COMPLETE
+        </div>
+
+        <div class="final-title">
+            TAKO
+        </div>
+
+        <p class="final-text">
+
+            You are one of the most
+            special people in my life.
+
+            <br><br>
+
+            Thank you for every smile,
+            every memory,
+            every little moment.
+
+            <br><br>
+
+            <b>ILIA ❤️ TAKO</b>
+
+            <br><br>
+
+            And this is only
+            the beginning...
+
+        </p>
+
+        <div class="small">
+            SYSTEM STATUS: ❤️ LOVE CONFIRMED ❤️
+        </div>
+
+    </div>
+
 </div>
+
+</div>
+
 
 <script>
 
+/* QUESTIONS */
+
 const questions = [
-    "DO YOU LOVE ILIA?",
-    "IS ILIA YOUR FAVORITE PERSON?",
-    "DOES ILIA MAKE YOU SMILE?",
-    "DO YOU MISS ILIA WHEN HE IS NOT AROUND?",
-    "DO YOU FEEL HAPPY WITH ILIA?",
-    "IS ILIA SPECIAL TO YOU?",
-    "DO YOU WANT MORE MEMORIES WITH ILIA?",
-    "WOULD YOU RATHER SPEND MORE TIME WITH ILIA?",
-    "DO YOU WANT ILIA TO STAY IN YOUR LIFE?",
-    "WOULD YOU CHOOSE ILIA AGAIN?"
+
+"Do you remember the first moment we really connected? ❤️",
+
+"Do I make you smile even when you don't want to? 😄",
+
+"Do you enjoy spending time with me?",
+
+"Do you feel happy when you see my name on your phone? 📱❤️",
+
+"Do you think we have something special?",
+
+"Would you choose to make more memories with me?",
+
+"Do you miss me when we haven't talked for a while?",
+
+"Do you like our little conversations?",
+
+"Would you go on another adventure with me? 🌙",
+
+"Do you think I know how special you are?",
+
+"Can I make your bad days a little better?",
+
+"Do you remember some of our funniest moments? 😂",
+
+"Would you replay one of our favorite memories?",
+
+"Do you like when we spend time together?",
+
+"Would you choose me to be part of more memories?",
+
+"Do you think we understand each other?",
+
+"Do I make your life a little more interesting?",
+
+"Would you like more unexpected surprises from me? 👀",
+
+"Do you think our story is worth continuing?",
+
+"Would you choose another day with me?",
+
+"Do you think I care about you a lot?",
+
+"Do you think you are important to me?",
+
+"Would you keep me in your life for a long time?",
+
+"Is there a little place in your heart for me? ❤️",
+
+"And finally... are you ready for the secret?"
+
 ];
 
 let current = 0;
 
+
+/* SHOW SCREEN */
+
 function show(id) {
-    document.querySelectorAll(".screen").forEach(s => {
-        s.classList.remove("active");
+
+    document.querySelectorAll(".screen").forEach(screen => {
+
+        screen.classList.remove("active");
+
     });
 
     document.getElementById(id).classList.add("active");
+
 }
+
+
+/* START */
 
 function startMission() {
+
     current = 0;
+
     show("game");
+
     loadQuestion();
+
 }
 
+
+/* LOAD QUESTION */
+
 function loadQuestion() {
-    document.getElementById("counter").innerText =
-        "MISSION STEP " + (current + 1) + " / " + questions.length;
 
     document.getElementById("question").innerText =
         questions[current];
 
+    document.getElementById("counter").innerText =
+        "MISSION PROGRESS: " +
+        (current + 1) +
+        " / " +
+        questions.length;
+
     document.getElementById("bar").style.width =
         ((current / questions.length) * 100) + "%";
+
 }
+
+
+/* ANSWER */
 
 function answer(yes) {
 
     if (!yes) {
+
         document.getElementById("question").innerText =
-            "ACCESS DENIED... NICE TRY 😄";
+            "ACCESS DENIED 😏❤️";
 
         setTimeout(() => {
+
             loadQuestion();
-        }, 1200);
+
+        }, 1000);
 
         return;
+
     }
+
+    createBurst();
 
     current++;
 
     if (current >= questions.length) {
+
         document.getElementById("bar").style.width = "100%";
 
         setTimeout(() => {
-            show("memory");
-        }, 800);
+
+            show("mid");
+
+        }, 700);
 
         return;
+
     }
 
     loadQuestion();
+
 }
 
-function showSecret() {
+
+/* MID */
+
+function continueMission() {
+
     show("secret");
+
 }
 
-function finalMessage() {
+
+/* FINAL */
+
+function reveal() {
+
     show("final");
+
+    createBurst();
+    createBurst();
+    createBurst();
+
+}
+
+
+/* FLOATING HEARTS */
+
+function createHeart() {
+
+    const heart = document.createElement("div");
+
+    heart.className = "heart";
+
+    const symbols = ["❤️","💗","💕","💖","💘"];
+
+    heart.innerText =
+        symbols[Math.floor(Math.random() * symbols.length)];
+
+    heart.style.left =
+        Math.random() * 100 + "%";
+
+    heart.style.fontSize =
+        (12 + Math.random() * 20) + "px";
+
+    heart.style.animationDuration =
+        (5 + Math.random() * 7) + "s";
+
+    heart.style.animationDelay =
+        Math.random() * 3 + "s";
+
+    document.getElementById("hearts").appendChild(heart);
+
+    setTimeout(() => {
+
+        heart.remove();
+
+    }, 13000);
+
+}
+
+setInterval(createHeart, 500);
+
+
+/* HEART BURST */
+
+function createBurst() {
+
+    for (let i = 0; i < 8; i++) {
+
+        const heart = document.createElement("div");
+
+        heart.innerText = "❤️";
+
+        heart.style.position = "fixed";
+        heart.style.left = "50%";
+        heart.style.top = "50%";
+        heart.style.fontSize = "25px";
+        heart.style.pointerEvents = "none";
+        heart.style.zIndex = "999";
+
+        const x =
+            (Math.random() - 0.5) * 500;
+
+        const y =
+            (Math.random() - 0.5) * 500;
+
+        heart.animate([
+
+            {
+                transform: "translate(-50%,-50%) scale(0)",
+                opacity: 1
+            },
+
+            {
+                transform:
+                    `translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) scale(1.5)`,
+                opacity: 0
+            }
+
+        ], {
+
+            duration: 900,
+            easing: "ease-out"
+
+        });
+
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+
+            heart.remove();
+
+        }, 900);
+
+    }
+
 }
 
 </script>
