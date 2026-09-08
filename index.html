@@ -2,555 +2,1084 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
-<title>MISSION: TAKO ❤️</title>
+<title>TAKO // TOP SECRET ❤️</title>
 
 <style>
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+:root {
+    --pink: #ff6f91;
+    --pink2: #ff9db5;
+    --rose: #ff416c;
+    --dark: #050306;
+    --card: rgba(255,255,255,0.07);
+    --border: rgba(255,150,180,0.25);
+}
 
 * {
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     margin: 0;
     min-height: 100vh;
-    background:
-        radial-gradient(circle at top, #2b101d 0%, #090609 45%, #020202 100%);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
     color: white;
-    font-family: Arial, sans-serif;
+    background:
+        radial-gradient(circle at 15% 10%, #35101d 0%, transparent 35%),
+        radial-gradient(circle at 85% 80%, #25091b 0%, transparent 30%),
+        linear-gradient(145deg, #080407, #020203 65%);
+    overflow-x: hidden;
+}
+
+/* =========================================================
+   BACKGROUND EFFECTS
+========================================================= */
+
+.bg-glow {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: .22;
+    pointer-events: none;
+    animation: glowMove 12s ease-in-out infinite alternate;
+}
+
+.glow1 {
+    width: 300px;
+    height: 300px;
+    background: #ff416c;
+    top: -100px;
+    left: -100px;
+}
+
+.glow2 {
+    width: 340px;
+    height: 340px;
+    background: #9d174d;
+    right: -140px;
+    bottom: -120px;
+    animation-delay: 3s;
+}
+
+@keyframes glowMove {
+    from { transform: translate(0,0) scale(1); }
+    to { transform: translate(40px,30px) scale(1.15); }
+}
+
+/* =========================================================
+   FLOATING PARTICLES
+========================================================= */
+
+#particles {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.particle {
+    position: absolute;
+    bottom: -40px;
+    opacity: 0;
+    animation: floatParticle linear forwards;
+}
+
+@keyframes floatParticle {
+    0% {
+        transform: translateY(0) scale(.5) rotate(0deg);
+        opacity: 0;
+    }
+    15% {
+        opacity: .6;
+    }
+    100% {
+        transform: translateY(-115vh) scale(1.3) rotate(30deg);
+        opacity: 0;
+    }
+}
+
+/* =========================================================
+   LAYOUT
+========================================================= */
+
+.app {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
+    padding:
+        max(26px, env(safe-area-inset-top))
+        16px
+        max(28px, env(safe-area-inset-bottom));
 }
 
-/* FLOATING HEARTS */
-
-.hearts {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    overflow: hidden;
-}
-
-.heart {
-    position: absolute;
-    bottom: -40px;
-    font-size: 18px;
-    opacity: 0;
-    animation: floatUp linear forwards;
-}
-
-@keyframes floatUp {
-
-    0% {
-        transform: translateY(0) scale(.7) rotate(0deg);
-        opacity: 0;
-    }
-
-    15% {
-        opacity: .8;
-    }
-
-    100% {
-        transform: translateY(-110vh) scale(1.4) rotate(25deg);
-        opacity: 0;
-    }
-
-}
-
-/* MAIN */
-
-.container {
-    width: 92%;
-    max-width: 680px;
+.wrap {
+    width: 100%;
+    max-width: 720px;
     text-align: center;
-    position: relative;
-    z-index: 2;
 }
 
 .screen {
     display: none;
-    animation: fadeIn .6s ease;
 }
 
 .screen.active {
     display: block;
+    animation: screenIn .8s cubic-bezier(.2,.8,.2,1);
 }
 
-@keyframes fadeIn {
-
+@keyframes screenIn {
     from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(20px) scale(.985);
+        filter: blur(5px);
     }
-
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
+        filter: blur(0);
     }
-
 }
 
-/* TEXT */
-
-h1 {
-    font-size: 42px;
-    letter-spacing: 5px;
-    margin: 10px 0;
-}
-
-h2 {
-    letter-spacing: 3px;
-}
-
-.subtitle {
-    color: #e29aad;
-    letter-spacing: 4px;
-    font-size: 13px;
-    margin-bottom: 30px;
-}
-
-p {
-    line-height: 1.7;
-}
-
-/* CARD */
+/* =========================================================
+   CARD
+========================================================= */
 
 .card {
-    background: rgba(255,255,255,.05);
-    border: 1px solid rgba(255,130,160,.35);
-    border-radius: 22px;
-    padding: 35px 25px;
+    position: relative;
+    overflow: hidden;
+    padding: 34px 25px;
+    border-radius: 28px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
     box-shadow:
-        0 0 40px rgba(255,70,120,.10),
-        inset 0 0 30px rgba(255,255,255,.02);
-    backdrop-filter: blur(12px);
+        0 25px 80px rgba(0,0,0,.45),
+        inset 0 1px 0 rgba(255,255,255,.08);
+}
+
+.card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.07),
+            transparent 35%,
+            rgba(255,100,140,.03)
+        );
+    pointer-events: none;
+}
+
+/* =========================================================
+   TYPOGRAPHY
+========================================================= */
+
+.eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    color: var(--pink2);
+    margin-bottom: 16px;
+}
+
+.title {
+    margin: 0;
+    font-size: clamp(34px, 8vw, 58px);
+    line-height: 1;
+    letter-spacing: 5px;
+    font-weight: 800;
+}
+
+.gradient-title {
+    background: linear-gradient(90deg, #fff, #ff96b0, #fff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200%;
+    animation: titleShine 5s linear infinite;
+}
+
+@keyframes titleShine {
+    to { background-position: 200% center; }
+}
+
+.description {
+    color: rgba(255,255,255,.74);
+    line-height: 1.75;
+    font-size: 16px;
+    max-width: 520px;
+    margin: 18px auto;
 }
 
 .question {
-    font-size: 24px;
-    line-height: 1.5;
-    margin: 30px 0;
-    min-height: 80px;
+    min-height: 95px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(21px, 5vw, 28px);
+    line-height: 1.45;
+    font-weight: 650;
+    padding: 10px;
 }
 
-.secret-code {
-    font-size: 11px;
-    color: #777;
-    letter-spacing: 3px;
+.code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    color: rgba(255,255,255,.4);
+    font-size: 10px;
+    letter-spacing: 2px;
 }
 
-/* BUTTONS */
+/* =========================================================
+   HEART
+========================================================= */
 
-button {
-    border: 1px solid #ff8fab;
-    background: rgba(255,80,120,.08);
-    color: white;
-    padding: 14px 32px;
-    margin: 8px;
-    border-radius: 30px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: .25s;
-}
-
-button:hover {
-    background: #ff6f91;
-    transform: scale(1.07);
-    box-shadow: 0 0 25px rgba(255,90,130,.5);
-}
-
-button:active {
-    transform: scale(.95);
-}
-
-/* PROGRESS */
-
-.progress-text {
-    color: #aaa;
-    font-size: 13px;
-    margin-top: 22px;
-}
-
-.progress {
-    width: 100%;
-    height: 7px;
-    background: rgba(255,255,255,.08);
-    border-radius: 10px;
-    margin-top: 10px;
-    overflow: hidden;
-}
-
-.bar {
-    height: 100%;
-    width: 0%;
-    background: linear-gradient(90deg,#ff5f87,#ffb0c0);
-    transition: width .5s ease;
-}
-
-/* BIG HEART */
-
-.big-heart {
-    font-size: 75px;
-    animation: heartbeat 1.2s infinite;
+.hero-heart {
+    font-size: 82px;
+    margin-bottom: 12px;
+    filter: drop-shadow(0 0 25px rgba(255,70,110,.4));
+    animation: heartbeat 1.35s ease-in-out infinite;
 }
 
 @keyframes heartbeat {
-
-    0%,100% {
-        transform: scale(1);
-    }
-
-    50% {
-        transform: scale(1.18);
-    }
-
+    0%,100% { transform: scale(1); }
+    45% { transform: scale(1.14); }
 }
 
-/* ERROR */
+/* =========================================================
+   BUTTONS
+========================================================= */
 
-.error-title {
-    color: #ff718f;
-    font-size: 30px;
-    letter-spacing: 3px;
+.buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 24px;
 }
 
-.system-text {
-    color: #bbb;
-    font-family: monospace;
+button {
+    appearance: none;
+    border: 1px solid rgba(255,150,180,.55);
+    background: rgba(255,255,255,.05);
+    color: white;
+    min-width: 130px;
+    padding: 14px 24px;
+    border-radius: 999px;
     font-size: 15px;
-    line-height: 2;
-    min-height: 150px;
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+        transform .2s ease,
+        background .2s ease,
+        box-shadow .2s ease;
 }
 
-/* FINAL */
-
-.final-title {
-    font-size: 45px;
-    color: #ff91aa;
-    text-shadow: 0 0 25px rgba(255,90,130,.6);
+button:hover {
+    transform: translateY(-2px) scale(1.03);
+    background: rgba(255,105,145,.18);
+    box-shadow: 0 12px 35px rgba(255,70,110,.18);
 }
 
-.final-text {
+button:active {
+    transform: scale(.96);
+}
+
+.primary {
+    background: linear-gradient(135deg, #ff4778, #e63d68);
+    border: none;
+    box-shadow: 0 12px 30px rgba(255,60,100,.23);
+}
+
+.primary:hover {
+    background: linear-gradient(135deg, #ff608b, #ee426f);
+}
+
+/* =========================================================
+   MUSIC BUTTON
+========================================================= */
+
+.music-button {
+    position: fixed;
+    top: max(14px, env(safe-area-inset-top));
+    right: 14px;
+    z-index: 999;
+    min-width: 0;
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    border-radius: 50%;
+    background: rgba(10,7,10,.65);
+    backdrop-filter: blur(15px);
+    font-size: 18px;
+}
+
+/* =========================================================
+   PROGRESS
+========================================================= */
+
+.progress-label {
+    margin-top: 24px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,.45);
+}
+
+.progress-track {
+    width: 100%;
+    height: 7px;
+    margin-top: 10px;
+    background: rgba(255,255,255,.08);
+    border-radius: 99px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #ff4778, #ffb0c3);
+    border-radius: inherit;
+    transition: width .5s cubic-bezier(.2,.8,.2,1);
+}
+
+/* =========================================================
+   ERROR SCREEN
+========================================================= */
+
+.alert-icon {
+    font-size: 50px;
+    margin-bottom: 15px;
+}
+
+.system-console {
+    text-align: left;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    max-width: 500px;
+    margin: 25px auto 0;
+    padding: 18px;
+    border-radius: 18px;
+    background: rgba(0,0,0,.28);
+    border: 1px solid rgba(255,255,255,.08);
+    color: #ffb6c6;
+    line-height: 1.9;
+    min-height: 190px;
+}
+
+/* =========================================================
+   MEMORY
+========================================================= */
+
+.memory-shell {
+    position: relative;
+    overflow: hidden;
+    border-radius: 22px;
+    margin: 20px 0;
+    background: #000;
+    aspect-ratio: 4 / 5;
+    box-shadow: 0 25px 60px rgba(0,0,0,.45);
+}
+
+.memory-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    animation: memoryIn .75s ease;
+}
+
+@keyframes memoryIn {
+    from {
+        opacity: 0;
+        transform: scale(1.06);
+        filter: blur(5px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+        filter: blur(0);
+    }
+}
+
+.memory-gradient {
+    position: absolute;
+    inset: auto 0 0;
+    height: 38%;
+    background: linear-gradient(transparent, rgba(0,0,0,.75));
+    pointer-events: none;
+}
+
+.memory-caption {
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    bottom: 20px;
+    text-align: left;
+}
+
+.memory-number {
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: rgba(255,255,255,.6);
+}
+
+.memory-text {
+    margin-top: 6px;
     font-size: 19px;
-    color: #eee;
+    font-weight: 700;
 }
 
-.small {
-    color: #777;
-    margin-top: 30px;
-    font-size: 12px;
+/* =========================================================
+   VIDEO
+========================================================= */
+
+.video-wrap {
+    position: relative;
+    border-radius: 22px;
+    overflow: hidden;
+    margin: 22px 0;
+    background: #000;
+    box-shadow: 0 25px 60px rgba(0,0,0,.5);
 }
 
+video {
+    width: 100%;
+    max-height: 65vh;
+    display: block;
+    background: black;
+}
+
+/* =========================================================
+   FINAL
+========================================================= */
+
+.final-photo {
+    width: 100%;
+    max-height: 500px;
+    object-fit: cover;
+    border-radius: 22px;
+    margin: 22px 0;
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.5),
+        0 0 40px rgba(255,80,120,.12);
+}
+
+.final-name {
+    font-size: clamp(38px, 10vw, 68px);
+    font-weight: 900;
+    margin: 12px 0;
+    color: #ff9db5;
+    text-shadow: 0 0 35px rgba(255,80,120,.32);
+}
+
+.final-message {
+    font-size: 18px;
+    line-height: 1.8;
+    color: rgba(255,255,255,.86);
+}
+
+.status {
+    margin-top: 28px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(255,255,255,.08);
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,.42);
+}
+
+/* =========================================================
+   HEART BURST
+========================================================= */
+
+.burst-heart {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    z-index: 9999;
+    pointer-events: none;
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 520px) {
+    .app {
+        align-items: center;
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .card {
+        padding: 28px 17px;
+        border-radius: 24px;
+    }
+
+    .memory-shell {
+        aspect-ratio: 3 / 4;
+    }
+
+    button {
+        min-width: 120px;
+    }
+}
 </style>
 </head>
 
 <body>
 
-<div class="hearts" id="hearts"></div>
+<div class="bg-glow glow1"></div>
+<div class="bg-glow glow2"></div>
 
-<div class="container">
+<div id="particles"></div>
 
+<audio id="bgMusic" loop preload="auto">
+    <source src="music.mp3" type="audio/mpeg">
+</audio>
 
-<!-- START -->
+<button
+    id="musicButton"
+    class="music-button"
+    onclick="toggleMusic()"
+    aria-label="Music">
+    🎵
+</button>
 
-<div id="start" class="screen active">
+<div class="app">
+<div class="wrap">
 
-    <div class="big-heart">❤️</div>
+<!-- =====================================================
+     START
+===================================================== -->
 
-    <h1>TOP SECRET</h1>
+<section id="start" class="screen active">
 
-    <div class="subtitle">
-        CLASSIFIED LOVE MISSION
+    <div class="hero-heart">❤️</div>
+
+    <div class="eyebrow">
+        PRIVATE ACCESS // TAKO
     </div>
+
+    <h1 class="title gradient-title">
+        TOP SECRET
+    </h1>
+
+    <p class="description">
+        A classified mission has been prepared
+        for one person only.
+    </p>
 
     <div class="card">
 
-        <p>SUBJECT: <b>TAKO</b></p>
+        <div class="code">
+            LOVE_PROTOCOL // ACCESS LEVEL: MAXIMUM
+        </div>
 
-        <p>
-            MISSION STATUS:
-            <span style="color:#ff91aa">READY</span>
+        <p class="description">
+            SUBJECT:
+            <b style="color:#ff9db5">TAKO</b>
+            <br><br>
+            There are 25 questions between you
+            and the final secret.
+            <br><br>
+            One small warning...
+            <br>
+            the system can detect suspicious answers. 😏
         </p>
 
-        <p>
-            A highly classified mission has been
-            prepared especially for you.
-        </p>
-
-        <p>
-            Please answer every question honestly...
-            😏
-        </p>
-
-        <button onclick="startMission()">
-            START MISSION ❤️
-        </button>
+        <div class="buttons">
+            <button class="primary" onclick="startMission()">
+                START MISSION ❤️
+            </button>
+        </div>
 
     </div>
 
-</div>
+</section>
 
 
-<!-- GAME -->
+<!-- =====================================================
+     QUESTIONS
+===================================================== -->
 
-<div id="game" class="screen">
+<section id="game" class="screen">
 
-    <div class="subtitle">
+    <div class="eyebrow">
         CLASSIFIED QUESTION
     </div>
 
     <div class="card">
 
-        <div class="secret-code">
-            SYSTEM ACCESS // LOVE_PROTOCOL
+        <div class="code">
+            TAKO.exe // LOVE_PROTOCOL
         </div>
 
-        <div class="question" id="question"></div>
+        <div id="question" class="question"></div>
 
-        <button onclick="answer(true)">
-            YES ❤️
-        </button>
+        <div class="buttons">
 
-        <button onclick="answer(false)">
-            NO 😏
-        </button>
+            <button class="primary" onclick="answer(true)">
+                YES ❤️
+            </button>
 
-        <div class="progress-text" id="counter"></div>
+            <button onclick="answer(false)">
+                NO 😏
+            </button>
 
-        <div class="progress">
-            <div class="bar" id="bar"></div>
+        </div>
+
+        <div id="progressLabel" class="progress-label"></div>
+
+        <div class="progress-track">
+            <div id="progressBar" class="progress-bar"></div>
         </div>
 
     </div>
 
-</div>
+</section>
 
 
-<!-- NO ERROR -->
+<!-- =====================================================
+     FUNNY NO
+===================================================== -->
 
-<div id="error" class="screen">
+<section id="error" class="screen">
 
     <div class="card">
 
-        <div class="error-title">
-            ⚠ SYSTEM ALERT ⚠
+        <div class="alert-icon">
+            ⚠️
         </div>
 
-        <div class="system-text" id="systemText"></div>
+        <div class="eyebrow">
+            SYSTEM ALERT
+        </div>
+
+        <h2>
+            SUSPICIOUS ANSWER DETECTED 😂
+        </h2>
+
+        <div id="systemConsole" class="system-console"></div>
 
     </div>
 
-</div>
+</section>
 
 
-<!-- MID -->
+<!-- =====================================================
+     UNLOCKED
+===================================================== -->
 
-<div id="mid" class="screen">
+<section id="unlock" class="screen">
 
-    <div class="big-heart">💗</div>
+    <div class="hero-heart">
+        💗
+    </div>
+
+    <div class="eyebrow">
+        MISSION COMPLETE
+    </div>
 
     <div class="card">
 
-        <h2>MISSION ALMOST COMPLETE</h2>
+        <h2>
+            MEMORY ARCHIVE UNLOCKED
+        </h2>
 
-        <p>
-            All answers have been successfully analyzed.
+        <p class="description">
+            25 questions completed.
+            <br><br>
+            The system found something more important
+            than answers...
+            <br><br>
+            memories. ❤️
         </p>
 
-        <p>
-            The system has detected an
-            unusually high level of...
-        </p>
-
-        <p style="color:#ff9bb0; font-size:20px;">
-            ❤️ LOVE ❤️
-        </p>
-
-        <button onclick="continueMission()">
-            CONTINUE 👀
+        <button class="primary" onclick="openMemories()">
+            OPEN MEMORIES 📸
         </button>
 
     </div>
 
-</div>
+</section>
 
 
-<!-- SECRET -->
+<!-- =====================================================
+     MEMORIES
+===================================================== -->
 
-<div id="secret" class="screen">
+<section id="memories" class="screen">
 
-    <div class="subtitle">
+    <div class="eyebrow">
+        PRIVATE MEMORY ARCHIVE
+    </div>
+
+    <div class="card">
+
+        <div class="code">
+            ARCHIVE // ILIA + TAKO
+        </div>
+
+        <div class="memory-shell">
+
+            <img
+                id="memoryImage"
+                class="memory-image"
+                src="photo1.jpeg"
+                alt="Memory">
+
+            <div class="memory-gradient"></div>
+
+            <div class="memory-caption">
+
+                <div
+                    id="memoryNumber"
+                    class="memory-number">
+                </div>
+
+                <div
+                    id="memoryText"
+                    class="memory-text">
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="buttons">
+
+            <button onclick="previousMemory()">
+                ← BACK
+            </button>
+
+            <button
+                id="memoryNextButton"
+                class="primary"
+                onclick="nextMemory()">
+                NEXT ❤️
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     VIDEO INTRO
+===================================================== -->
+
+<section id="videoIntro" class="screen">
+
+    <div class="hero-heart">
+        🎥
+    </div>
+
+    <div class="card">
+
+        <div class="eyebrow">
+            ONE MORE MEMORY
+        </div>
+
+        <h2>
+            SPECIAL FILE FOUND
+        </h2>
+
+        <p class="description">
+            The archive contains one final video.
+        </p>
+
+        <button class="primary" onclick="openVideo()">
+            OPEN VIDEO ❤️
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     VIDEO
+===================================================== -->
+
+<section id="videoScreen" class="screen">
+
+    <div class="eyebrow">
+        SPECIAL MEMORY
+    </div>
+
+    <div class="card">
+
+        <div class="video-wrap">
+
+            <video
+                id="specialVideo"
+                controls
+                playsinline
+                preload="metadata">
+
+                <source
+                    src="video1.mp4"
+                    type="video/mp4">
+
+            </video>
+
+        </div>
+
+        <p class="description">
+            Some moments don't need an explanation. ❤️
+        </p>
+
+        <button class="primary" onclick="openSecret()">
+            CONTINUE
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     FINAL SECRET
+===================================================== -->
+
+<section id="secret" class="screen">
+
+    <div class="hero-heart">
+        💖
+    </div>
+
+    <div class="eyebrow">
         FINAL ACCESS GRANTED
     </div>
 
     <div class="card">
 
-        <div class="big-heart">💖</div>
+        <h1 class="gradient-title">
+            FINAL SECRET
+        </h1>
 
-        <h1>FINAL SECRET</h1>
-
-        <p class="final-text">
-
+        <p class="description">
             This mission was never really
-            about the questions.
-
+            about getting every answer right.
             <br><br>
-
-            It was created because there is
-            someone very special on the other
-            side of this screen.
-
+            It was about all the small moments,
+            the funny ones,
+            the random ones,
+            and the memories that became special.
             <br><br>
-
-            And now...
-
-            <br>
-
-            you are ready to find out why. ❤️
-
+            There is one final page left.
         </p>
 
-        <button onclick="reveal()">
+        <button class="primary" onclick="revealFinal()">
             REVEAL ❤️
         </button>
 
     </div>
 
-</div>
+</section>
 
 
-<!-- FINAL -->
+<!-- =====================================================
+     FINAL
+===================================================== -->
 
-<div id="final" class="screen">
+<section id="final" class="screen">
 
     <div class="card">
 
-        <div class="big-heart">❤️</div>
+        <div class="hero-heart">
+            ❤️
+        </div>
 
-        <div class="subtitle">
+        <div class="eyebrow">
             MISSION COMPLETE
         </div>
 
-        <div class="final-title">
+        <div class="final-name">
             TAKO
         </div>
 
-        <p class="final-text">
+        <img
+            src="photo9.jpeg"
+            class="final-photo"
+            alt="Final memory">
 
-            You are one of the most
-            special people in my life.
-
-            <br><br>
+        <p class="final-message">
 
             Thank you for every smile,
-            every memory and every
-            little moment.
+            every laugh,
+            every adventure
+            and every memory.
 
             <br><br>
 
-            Some people simply become
-            special without even trying.
+            Some moments last for seconds.
+            <br>
+            Some memories stay much longer.
 
             <br><br>
 
-            <b>ILIA ❤️ TAKO</b>
+            And somehow,
+            all of these became part of our story.
 
             <br><br>
 
-            And this...
+            <strong>
+                ILIA ❤️ TAKO
+            </strong>
+
+            <br><br>
+
+            This mission is complete...
 
             <br>
 
-            is only the beginning. ❤️
+            but the story isn't. ❤️
 
         </p>
 
-        <div class="small">
-            SYSTEM STATUS:
-            ❤️ LOVE CONFIRMED ❤️
+        <div class="status">
+            SYSTEM STATUS // LOVE CONFIRMED ❤️
         </div>
 
     </div>
 
+</section>
+
 </div>
-
-
 </div>
 
 
 <script>
 
-
-/* =========================
-   QUESTIONS
-========================= */
+/* =========================================================
+   DATA
+========================================================= */
 
 const questions = [
 
-"Do you remember the first moment we really connected? ❤️",
+    "Do you remember the first moment we really connected? ❤️",
 
-"Do I make you smile even when you don't want to? 😄",
+    "Do I make you smile even when you're trying not to? 😏",
 
-"Do you enjoy spending time with me?",
+    "Do you enjoy spending time with me?",
 
-"Do you feel happy when you see my name on your phone? 📱❤️",
+    "Does seeing my name on your phone make your day a little better? 📱❤️",
 
-"Do you think we have something special?",
+    "Do you think we have something special?",
 
-"Would you choose to make more memories with me?",
+    "Would you choose to make more memories with me?",
 
-"Do you miss me when we haven't talked for a while?",
+    "Do you miss our conversations when we haven't talked for a while?",
 
-"Do you like our little conversations?",
+    "Do you like our random little moments? 😄",
 
-"Would you go on another adventure with me? 🌙",
+    "Would you go on another adventure with me? 🌙",
 
-"Do you think I know how special you are?",
+    "Do you think I notice the little things about you?",
 
-"Can I make your bad days a little better?",
+    "Can I make a bad day feel a little better?",
 
-"Do you remember some of our funniest moments? 😂",
+    "Do some of our funniest moments still make you laugh? 😂",
 
-"Would you replay one of our favorite memories?",
+    "Would you replay one of our favorite memories if you could?",
 
-"Do you like when we spend time together?",
+    "Do you like the time we spend together?",
 
-"Would you choose me to be part of more memories?",
+    "Would you choose another spontaneous day with me?",
 
-"Do you think we understand each other?",
+    "Do you think we understand each other in our own way?",
 
-"Do I make your life a little more interesting?",
+    "Do I make life a little more interesting? 😎",
 
-"Would you like more unexpected surprises from me? 👀",
+    "Would you like more ridiculous surprises like this one? 😂",
 
-"Do you think our story is worth continuing?",
+    "Do you think some of our memories are unforgettable?",
 
-"Would you choose another day with me?",
+    "Would you choose another adventure with me?",
 
-"Do you think I care about you a lot?",
+    "Do you know how much I care about you?",
 
-"Do you think you are important to me?",
+    "Do you know you're important to me?",
 
-"Would you keep me in your life for a long time?",
+    "Would you keep making memories with me?",
 
-"Is there a little place in your heart for me? ❤️",
+    "Do you think this mission is getting suspiciously cute? 😂❤️",
 
-"And finally... are you ready for the secret? 👀❤️"
+    "Are you ready to unlock the secret archive? 👀❤️"
 
 ];
 
 
-let current = 0;
+const memoryCaptions = [
+
+    "Some adventures deserve their own archive. 🏍️",
+
+    "Matching energy level: confirmed. 😄",
+
+    "One of those simple days that became a memory. ❤️",
+
+    "Evidence that we are completely normal people. 😂",
+
+    "Adventure mode: activated. 🏍️",
+
+    "A random moment worth keeping.",
+
+    "Some photos just feel special. ❤️",
+
+    "One frame. One memory.",
+
+    "And somehow... here we are. ❤️"
+
+];
 
 
-/* =========================
-   SHOW SCREEN
-========================= */
+/* =========================================================
+   STATE
+========================================================= */
 
-function show(id) {
+let currentQuestion = 0;
+
+let currentMemory = 1;
+
+let musicPlaying = false;
+
+let musicWasPlayingBeforeVideo = false;
+
+const totalMemories = 9;
+
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const music = document.getElementById("bgMusic");
+
+const musicButton = document.getElementById("musicButton");
+
+const video = document.getElementById("specialVideo");
+
+
+/* =========================================================
+   SCREEN CONTROL
+========================================================= */
+
+function showScreen(id) {
 
     document.querySelectorAll(".screen").forEach(screen => {
 
@@ -558,74 +1087,173 @@ function show(id) {
 
     });
 
-    document.getElementById(id).classList.add("active");
+    const target = document.getElementById(id);
+
+    target.classList.add("active");
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
 
 }
 
 
-/* =========================
+/* =========================================================
+   MUSIC
+========================================================= */
+
+async function startMusic() {
+
+    try {
+
+        music.volume = 0.40;
+
+        await music.play();
+
+        musicPlaying = true;
+
+        updateMusicButton();
+
+    } catch (error) {
+
+        musicPlaying = false;
+
+        updateMusicButton();
+
+    }
+
+}
+
+
+async function toggleMusic() {
+
+    if (music.paused) {
+
+        try {
+
+            await music.play();
+
+            musicPlaying = true;
+
+        } catch (error) {}
+
+    } else {
+
+        music.pause();
+
+        musicPlaying = false;
+
+    }
+
+    updateMusicButton();
+
+}
+
+
+function updateMusicButton() {
+
+    musicButton.innerHTML =
+        music.paused ? "🔇" : "🎵";
+
+}
+
+
+/* =========================================================
    START
-========================= */
+========================================================= */
 
 function startMission() {
 
-    current = 0;
+    startMusic();
 
-    show("game");
+    currentQuestion = 0;
+
+    currentMemory = 1;
+
+    showScreen("game");
 
     loadQuestion();
+
+    burstHearts(12);
 
 }
 
 
-/* =========================
-   LOAD QUESTION
-========================= */
+/* =========================================================
+   QUESTIONS
+========================================================= */
 
 function loadQuestion() {
 
-    document.getElementById("question").innerText =
-        questions[current];
+    const question =
+        document.getElementById("question");
 
-    document.getElementById("counter").innerText =
-        "MISSION PROGRESS: " +
-        (current + 1) +
-        " / " +
-        questions.length;
+    const label =
+        document.getElementById("progressLabel");
 
-    document.getElementById("bar").style.width =
-        ((current / questions.length) * 100) + "%";
+    const bar =
+        document.getElementById("progressBar");
+
+    question.style.opacity = "0";
+
+    question.style.transform =
+        "translateY(8px)";
+
+    setTimeout(() => {
+
+        question.textContent =
+            questions[currentQuestion];
+
+        question.style.transition =
+            "all .35s ease";
+
+        question.style.opacity = "1";
+
+        question.style.transform =
+            "translateY(0)";
+
+    }, 120);
+
+    label.textContent =
+        `MISSION PROGRESS // ${currentQuestion + 1} OF ${questions.length}`;
+
+    bar.style.width =
+        ((currentQuestion) / questions.length * 100) + "%";
 
 }
 
 
-/* =========================
-   ANSWER
-========================= */
+/* =========================================================
+   ANSWERS
+========================================================= */
 
-function answer(yes) {
+function answer(isYes) {
 
-    if (!yes) {
+    if (!isYes) {
 
-        showError();
+        triggerNo();
 
         return;
 
     }
 
-    createBurst();
+    burstHearts(7);
 
-    current++;
+    currentQuestion++;
 
-    if (current >= questions.length) {
+    if (currentQuestion >= questions.length) {
 
-        document.getElementById("bar").style.width = "100%";
+        document.getElementById("progressBar")
+            .style.width = "100%";
 
         setTimeout(() => {
 
-            show("mid");
+            showScreen("unlock");
 
-        }, 600);
+            burstHearts(22);
+
+        }, 500);
 
         return;
 
@@ -636,199 +1264,376 @@ function answer(yes) {
 }
 
 
-/* =========================
-   FUNNY NO SYSTEM
-========================= */
+/* =========================================================
+   FUNNY NO
+========================================================= */
 
-function showError() {
+function triggerNo() {
 
-    show("error");
+    showScreen("error");
 
-    const text = document.getElementById("systemText");
+    const consoleBox =
+        document.getElementById("systemConsole");
 
     const messages = [
 
-        "NO detected...",
+        "> NO detected...",
 
-        "Analyzing answer...",
+        "> analyzing response...",
 
-        "Checking honesty...",
+        "> checking honesty level...",
 
-        "Checking again...",
+        "> checking again because that looked suspicious...",
 
-        "ERROR 404: Honest answer not found 😂",
+        "> ERROR 404: convincing answer not found 😂",
 
-        "Tako.exe is clearly pretending 😏❤️",
+        "> Tako.exe has entered suspicious mode 😏",
 
-        "SYSTEM HAS DETECTED SUS BEHAVIOR 😂",
+        "> conclusion: system refuses to believe this answer ❤️",
 
-        "MISSION RESTARTING..."
+        "> mission restarting in 3... 2... 1..."
 
     ];
 
-    text.innerHTML = "";
+    consoleBox.innerHTML = "";
 
-    let i = 0;
+    let index = 0;
 
-    function nextMessage() {
+    function printNext() {
 
-        if (i >= messages.length) {
+        if (index >= messages.length) {
 
             setTimeout(() => {
 
-                current = 0;
+                currentQuestion = 0;
 
-                show("game");
+                showScreen("game");
 
                 loadQuestion();
 
-            }, 700);
+            }, 900);
 
             return;
 
         }
 
-        text.innerHTML +=
-            messages[i] + "<br>";
+        const line =
+            document.createElement("div");
 
-        i++;
+        line.textContent =
+            messages[index];
 
-        setTimeout(nextMessage, 450);
+        consoleBox.appendChild(line);
+
+        index++;
+
+        setTimeout(printNext, 420);
 
     }
 
-    nextMessage();
+    printNext();
 
 }
 
 
-/* =========================
-   MID
-========================= */
+/* =========================================================
+   MEMORIES
+========================================================= */
 
-function continueMission() {
+function openMemories() {
 
-    show("secret");
+    currentMemory = 1;
+
+    loadMemory();
+
+    showScreen("memories");
 
 }
 
 
-/* =========================
+function loadMemory() {
+
+    const image =
+        document.getElementById("memoryImage");
+
+    const number =
+        document.getElementById("memoryNumber");
+
+    const text =
+        document.getElementById("memoryText");
+
+    const nextButton =
+        document.getElementById("memoryNextButton");
+
+    image.classList.remove("memory-image");
+
+    void image.offsetWidth;
+
+    image.src =
+        `photo${currentMemory}.jpeg`;
+
+    image.classList.add("memory-image");
+
+    number.textContent =
+        `MEMORY ${String(currentMemory).padStart(2,"0")} / ${String(totalMemories).padStart(2,"0")}`;
+
+    text.textContent =
+        memoryCaptions[currentMemory - 1];
+
+    if (currentMemory === totalMemories) {
+
+        nextButton.textContent =
+            "FINAL MEMORY 🎥";
+
+    } else {
+
+        nextButton.textContent =
+            "NEXT ❤️";
+
+    }
+
+}
+
+
+function nextMemory() {
+
+    burstHearts(4);
+
+    if (currentMemory >= totalMemories) {
+
+        showScreen("videoIntro");
+
+        return;
+
+    }
+
+    currentMemory++;
+
+    loadMemory();
+
+}
+
+
+function previousMemory() {
+
+    if (currentMemory <= 1) return;
+
+    currentMemory--;
+
+    loadMemory();
+
+}
+
+
+/* =========================================================
+   VIDEO
+========================================================= */
+
+function openVideo() {
+
+    musicWasPlayingBeforeVideo =
+        !music.paused;
+
+    if (musicWasPlayingBeforeVideo) {
+
+        fadeMusicDown();
+
+    }
+
+    showScreen("videoScreen");
+
+}
+
+
+video.addEventListener("play", () => {
+
+    musicWasPlayingBeforeVideo =
+        !music.paused || musicWasPlayingBeforeVideo;
+
+    music.pause();
+
+    musicPlaying = false;
+
+    updateMusicButton();
+
+});
+
+
+video.addEventListener("ended", () => {
+
+    if (musicWasPlayingBeforeVideo) {
+
+        fadeMusicUp();
+
+    }
+
+});
+
+
+function openSecret() {
+
+    video.pause();
+
+    if (musicWasPlayingBeforeVideo) {
+
+        fadeMusicUp();
+
+    }
+
+    showScreen("secret");
+
+}
+
+
+/* =========================================================
+   MUSIC FADES
+========================================================= */
+
+function fadeMusicDown() {
+
+    const interval = setInterval(() => {
+
+        if (music.volume > .06) {
+
+            music.volume =
+                Math.max(0, music.volume - .05);
+
+        } else {
+
+            music.pause();
+
+            music.volume = .40;
+
+            clearInterval(interval);
+
+            updateMusicButton();
+
+        }
+
+    }, 70);
+
+}
+
+
+function fadeMusicUp() {
+
+    music.volume = .05;
+
+    music.play()
+        .then(() => {
+
+            musicPlaying = true;
+
+            const interval =
+                setInterval(() => {
+
+                    if (music.volume < .40) {
+
+                        music.volume =
+                            Math.min(.40, music.volume + .05);
+
+                    } else {
+
+                        clearInterval(interval);
+
+                    }
+
+                }, 80);
+
+            updateMusicButton();
+
+        })
+        .catch(() => {});
+
+}
+
+
+/* =========================================================
    FINAL
-========================= */
+========================================================= */
 
-function reveal() {
+function revealFinal() {
 
-    show("final");
+    showScreen("final");
 
-    createBurst();
-    createBurst();
-    createBurst();
-    createBurst();
-
-}
-
-
-/* =========================
-   FLOATING HEARTS
-========================= */
-
-function createHeart() {
-
-    const heart = document.createElement("div");
-
-    heart.className = "heart";
-
-    const symbols = [
-        "❤️",
-        "💗",
-        "💕",
-        "💖",
-        "💘"
-    ];
-
-    heart.innerText =
-        symbols[
-            Math.floor(Math.random() * symbols.length)
-        ];
-
-    heart.style.left =
-        Math.random() * 100 + "%";
-
-    heart.style.fontSize =
-        (12 + Math.random() * 20) + "px";
-
-    heart.style.animationDuration =
-        (5 + Math.random() * 7) + "s";
-
-    document.getElementById("hearts")
-        .appendChild(heart);
+    burstHearts(45);
 
     setTimeout(() => {
+        burstHearts(35);
+    }, 900);
 
-        heart.remove();
-
-    }, 13000);
+    setTimeout(() => {
+        burstHearts(25);
+    }, 1800);
 
 }
 
-setInterval(createHeart, 500);
 
-
-/* =========================
+/* =========================================================
    HEART BURST
-========================= */
+========================================================= */
 
-function createBurst() {
+function burstHearts(amount = 12) {
 
-    for (let i = 0; i < 12; i++) {
+    const symbols =
+        ["❤️","💗","💕","💖","✨"];
+
+    for (let i = 0; i < amount; i++) {
 
         const heart =
             document.createElement("div");
 
-        heart.innerText = "❤️";
+        heart.className =
+            "burst-heart";
 
-        heart.style.position = "fixed";
-        heart.style.left = "50%";
-        heart.style.top = "50%";
-        heart.style.fontSize = "25px";
-        heart.style.pointerEvents = "none";
-        heart.style.zIndex = "999";
+        heart.textContent =
+            symbols[
+                Math.floor(
+                    Math.random() *
+                    symbols.length
+                )
+            ];
+
+        heart.style.fontSize =
+            (16 + Math.random() * 20) + "px";
 
         const x =
-            (Math.random() - .5) * 600;
+            (Math.random() - .5) *
+            Math.min(window.innerWidth, 650);
 
         const y =
-            (Math.random() - .5) * 600;
+            (Math.random() - .5) *
+            Math.min(window.innerHeight, 700);
 
-        heart.animate(
-
-            [
-
-                {
-                    transform:
-                        "translate(-50%,-50%) scale(0)",
-                    opacity: 1
-                },
-
-                {
-                    transform:
-                        `translate(
-                            calc(-50% + ${x}px),
-                            calc(-50% + ${y}px)
-                        ) scale(1.5)`,
-
-                    opacity: 0
-                }
-
-            ],
+        heart.animate([
 
             {
-                duration: 1000,
-                easing: "ease-out"
+                transform:
+                    "translate(-50%,-50%) scale(.3)",
+                opacity: 1
+            },
+
+            {
+                transform:
+                    `translate(
+                        calc(-50% + ${x}px),
+                        calc(-50% + ${y}px)
+                    )
+                    rotate(${Math.random()*90-45}deg)
+                    scale(1.5)`,
+
+                opacity: 0
             }
 
-        );
+        ], {
+
+            duration:
+                900 + Math.random() * 600,
+
+            easing:
+                "cubic-bezier(.17,.67,.4,1)"
+
+        });
 
         document.body.appendChild(heart);
 
@@ -836,11 +1641,82 @@ function createBurst() {
 
             heart.remove();
 
-        }, 1000);
+        }, 1600);
 
     }
 
 }
+
+
+/* =========================================================
+   BACKGROUND PARTICLES
+========================================================= */
+
+function createParticle() {
+
+    const p =
+        document.createElement("div");
+
+    p.className =
+        "particle";
+
+    const symbols =
+        ["❤️","♡","✦","💕"];
+
+    p.textContent =
+        symbols[
+            Math.floor(
+                Math.random() *
+                symbols.length
+            )
+        ];
+
+    p.style.left =
+        Math.random() * 100 + "%";
+
+    p.style.fontSize =
+        (10 + Math.random() * 14) + "px";
+
+    p.style.animationDuration =
+        (7 + Math.random() * 8) + "s";
+
+    document
+        .getElementById("particles")
+        .appendChild(p);
+
+    setTimeout(() => {
+
+        p.remove();
+
+    }, 16000);
+
+}
+
+
+setInterval(
+    createParticle,
+    850
+);
+
+
+/* =========================================================
+   PRELOAD PHOTOS
+========================================================= */
+
+for (let i = 1; i <= totalMemories; i++) {
+
+    const img =
+        new Image();
+
+    img.src =
+        `photo${i}.jpeg`;
+
+}
+
+
+/* INITIAL MUSIC ICON */
+
+updateMusicButton();
 
 </script>
 
